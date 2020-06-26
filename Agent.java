@@ -1,5 +1,4 @@
 
-
 import java.awt.Point;
 import java.io.*;
 import static java.lang.Integer.*;
@@ -9,9 +8,8 @@ import java.util.*;
 import java.io.File;
 import java.util.stream.Collectors;
 
-public class NewClass {
-    
-    
+public class HalmaAgent {
+   
     public static void main(String[] args)throws Exception 
     { 
 		//reading input
@@ -48,7 +46,6 @@ public class NewClass {
             path=ss.solutionMainFunction(3);
         else
             path=path+s.solutionMainFunction(3); 
-            
             //varying depth based on time left as greater the depth, greater the time taken to generate a move
       if(path.equals(""))
             {
@@ -65,16 +62,14 @@ public class NewClass {
                 else
                     path=path+s.solutionMainFunction(1);
             }
-                
         }
         System.out.println(path);
 	output.write(path);
 	output.close();
 	//input.close();
     }
-    
-    
 }
+
 
 class Solution
 {
@@ -86,6 +81,7 @@ class Solution
     char p;
     Point bestmovesrc=new Point();
     Point bestmovedest=new Point();
+	
     Solution(char board[][],String move,String player,float timeleft)
     {
         this.board=board;
@@ -98,7 +94,6 @@ class Solution
             p='B';
     }
         
-    
     String solutionMainFunction(int depth)
     {
         String path;
@@ -124,7 +119,7 @@ class Solution
         if(board[srcx][srcy]==p)
             System.out.println("\n\ntrue\n\npath:"+srcy+","+srcx+" to "+desty+","+destx);
         else
-//            System.out.println("\n\nfalse\n\n");
+            System.out.println("\n\nfalse\n\n");
         for(int i=0;i<16;i++){
             for(int j=0;j<16;j++)
                 System.out.print(board[i][j]);
@@ -132,8 +127,7 @@ class Solution
         }           
         LinkedList<Point> jumps=new LinkedList<>();
         jumps.addAll(calculateJumpMove(srcx,srcy,board,jumps,p));
-       
-	    //checking possible jump moves
+	    //checking all possible jump moves
         int jumpx[]={-2,-2,2,2,-2,0,2,0};
         int jumpy[]={-2,2,-2,2,0,2,0,-2}; 
         int midx[]={-1,-1,1,1,-1,0,1,0};
@@ -217,6 +211,7 @@ class Solution
         System.out.println("path before returnin:"+path);   
         return path;    
     }
+	
     void dummymoves(char[][] currentboard,char currentp)
     {
         int movex[]={-1,-1,-1,0,0,1,1,1};
@@ -253,7 +248,7 @@ class Solution
         int value=maximize(currentboard,depth,-10000,10000);   
     }
     
-    boolean isWinning(char[][] currentboard,char currentp)          //returns true if opposite base is completely occupied for winning
+    boolean isWinning(char[][] currentboard,char currentp)          //returns true if opposite base camp is completely occupied for winning
     {
         if(currentp=='W')
             if(currentboard[0][0]=='W'&&currentboard[0][1]=='W'&&currentboard[0][2]=='W'&&currentboard[0][3]=='W'&&currentboard[0][4]=='W'&&currentboard[1][0]=='W'&&currentboard[1][1]=='W'&&currentboard[1][2]=='W'&&currentboard[1][3]=='W'&&currentboard[1][4]=='W'&&currentboard[2][0]=='W'&&currentboard[2][1]=='W'&&currentboard[2][2]=='W'&&currentboard[2][3]=='W'&&currentboard[3][0]=='W'&&currentboard[3][1]=='W'&&currentboard[3][2]=='W'&&currentboard[4][0]=='W'&&currentboard[4][1]=='W')
@@ -267,7 +262,7 @@ class Solution
                 return false;           
     }
     
-    boolean isBaseEmpty(char[][] currentboard,char currentp)        //returns true if base is emptied
+    boolean isBaseEmpty(char[][] currentboard,char currentp)        //returns true if base camp is emptied
     {
         if(currentp=='B')
             if(currentboard[0][0]=='B'||currentboard[0][1]=='B'||currentboard[0][2]=='B'||currentboard[0][3]=='B'||currentboard[0][4]=='B'||currentboard[1][0]=='B'||currentboard[1][1]=='B'||currentboard[1][2]=='B'||currentboard[1][3]=='B'||currentboard[1][4]=='B'||currentboard[2][0]=='B'||currentboard[2][1]=='B'||currentboard[2][2]=='B'||currentboard[2][3]=='B'||currentboard[3][0]=='B'||currentboard[3][1]=='B'||currentboard[3][2]=='B'||currentboard[4][0]=='B'||currentboard[4][1]=='B')
@@ -304,6 +299,7 @@ class Solution
         }
         return moves; 
     }
+	
     List calculateEdgeMove(int i,int j,char[][] currentBoard,char currentp)
     {
         int movex[]={-1,-1,-1,0,0,1,1,1};
@@ -316,9 +312,7 @@ class Solution
         for(m=0;m<8;m++)
         {
             if(i+movex[m]>=0&&j+movey[m]>=0&&i+movex[m]<16&&j+movey[m]<16&&currentBoard[i+movex[m]][j+movey[m]]=='.')
-            {
-                
-                
+            {   
                 if(currentp=='B'&&!campA.contains(a)&&campA.contains(new Point(i+movex[m],j+movey[m])))
                 {
 			if(((i>=(i+movex[m]))&&(j>=(j+movey[m])))||!campA.contains(new Point(i+movex[m],j+movey[m])))
@@ -367,7 +361,6 @@ class Solution
                         {
                             ll.add(a);
                         }
-                   
                 }    
             }        
             
@@ -529,6 +522,7 @@ class Solution
         currentboard[(int)newpos.getX()][(int)newpos.getY()]=currentp; 
         return currentboard;
     }
+	
     char[][] undomove(Point src,Point newpos,char currentp,char[][] currentboard)
     {
 
@@ -679,7 +673,6 @@ class Solution
                         value=value+val[i][j];      
                 }   
             }
-
         else
             for(int i=15;i>=0;i--)
             {
