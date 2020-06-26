@@ -28,7 +28,6 @@ public class NewClass {
 		p[i]=sc.nextLine();
 		pos[i]=p[i].toCharArray();
 	}	
-	//System.out.println(p[4]);
 	System.out.println(move+"\n"+"player"+player+"\n"+timeleft+" \nboard");
         for(int i=0;i<16;i++)
         {    
@@ -114,23 +113,11 @@ class Solution
             path="E "+srcy+","+srcx+" "+desty+","+destx+"\n";
         else
                 path=findJumpPath(srcx,srcy,destx,desty);
-             //path="J "+srcy+","+srcx+" "+desty+","+destx+"\n";
-        //path=""+BoardAfterMove.src.toString()+" "+BoardAfterMove.dest.toString();
-        //path=""+bestmovesrc.toString()+" "+bestmovedest.toString();
-        //char[][] newboardx=move(BoardAfterMove.src,BoardAfterMove.dest,p,board);
-    //    char[][] newboardx=move(bestmovesrc,bestmovedest,p,board);
-    //    for(int i=0;i<16;i++)
-    //    {
-    //        for(int j=0;j<16;j++)
-    //            System.out.print(newboardx[i][j]);
-    //        System.out.println();
-    //    }
         return path;
     }
     
     String findJumpPath(int srcx,int srcy,int finaldestx,int finaldesty)
     {
-//        String path=""+desty+","+destx;
         String path="";
         int destx=finaldestx;
         int desty=finaldesty;
@@ -142,16 +129,11 @@ class Solution
             for(int j=0;j<16;j++)
                 System.out.print(board[i][j]);
             System.out.println();
-        }    
-//        LinkedList<Point> jumpll=new LinkedList<>();
-//        jumpll.addAll(calculateJumpMove(srcx,srcy,board,jumpll,p));
-//        Set<Point> jumpss=new HashSet<>(jumpll);
-//        LinkedList<Point> jumps=new LinkedList<>(jumpss);        
+        }           
         LinkedList<Point> jumps=new LinkedList<>();
         jumps.addAll(calculateJumpMove(srcx,srcy,board,jumps,p));
-//        System.out.println("final jumps list as per function:\n"+jumps);
-//        System.out.println("src&dest:"+srcy+","+srcx+"->"+desty+","+destx);
-        
+       
+	    //checking possible jump moves
         int jumpx[]={-2,-2,2,2,-2,0,2,0};
         int jumpy[]={-2,2,-2,2,0,2,0,-2}; 
         int midx[]={-1,-1,1,1,-1,0,1,0};
@@ -175,10 +157,7 @@ class Solution
             }
         }
         moves.put(new Point(srcx,srcy), visited);
-//        System.out.println("First jump rounds map:"+moves);
-//        System.out.println("First jump rounds:"+visited);
-        visitedtemp.addAll(visited);
-//        visitedAll.addAll(visited);
+        visitedtemp.addAll(visited);\
         visited.clear();
         int i;
         while(visitedtemp.size()>0)
@@ -186,7 +165,6 @@ class Solution
             Point newsrc=visitedtemp.get(0);
             visitedtemp.remove(0);
             visitedAll.add(newsrc);
-//            System.out.println("visitng:"+newsrc);
             int newsrcx=(int)newsrc.getX();
             int newsrcy=(int)newsrc.getY();
             
@@ -196,7 +174,6 @@ class Solution
                 {
                     if(!visitedAll.contains(new Point(newsrcx+jumpx[m],newsrcy+jumpy[m])))
                     {
-//                        visitedtemp.add(new Point(newsrcx+jumpx[m],newsrcy+jumpy[m]));
                         
                         visitedAll.add(new Point(newsrcx+jumpx[m],newsrcy+jumpy[m]));
                         visited.add(new Point(newsrcx+jumpx[m],newsrcy+jumpy[m]));
@@ -204,23 +181,15 @@ class Solution
                         if(finaldestx==newsrcx+jumpx[m]&&finaldesty==newsrcy+jumpy[m])
                         {
                             counter=1;
-//                            break;
                         }
                     }    
                 }
             }
             moves.put(newsrc, visited);
-//            System.out.println("next jump rounds map:"+moves);
-//            System.out.println("next jump rounds:"+visited);
             visitedtemp.addAll(visited);
             visited.clear();
-//            System.out.println(paths);
-//            if(counter==1)
-//                break;
         }
-//        System.out.println("moves as per map"+moves);
             System.out.println(paths);
-//            path=path+paths.get(paths.size()-1);
             String t=""+finaldesty+","+finaldestx;
             for(int j=paths.size()-1;j>=0;j--)
             {
@@ -235,11 +204,8 @@ class Solution
             for(int j=0;j<paths.size()-1;j++)
             {
                 String temp=path.split(" ")[1];
-//                System.out.println("new src:"+temp);
                 for(int k=0;k<paths.size();k++)
                 {
-//                    System.out.println(paths.get(k));
-                 
                     if(paths.get(k).split(" ")[2].equals(temp))
                     {
                         path=paths.get(k)+"\n"+path;
@@ -248,64 +214,6 @@ class Solution
                 }
                     
             }
-//            System.out.println("Finl path:");
-//            System.out.println(path);
-            
-            
-        
-//        while(true)
-//        {
-//                for (Object o : hm.keySet()) {
-//                    if (hm.get(o).equals(value)) {
-//                        return o;
-//      }
-//        }
-        
-        
-        
-        
-//        int counter=0,newsrcx,newsrcy;
-//        for(int j=0;j<jumps.size();j++)
-//        {
-//            for(int i=0;i<8;i++)
-//            {
-//                
-//                if(jumps.contains(new Point(destx+jumpx[i],desty+jumpy[i])))
-//                {
-//                    visited.add(new Point(destx,desty));
-//                    jumps.remove(new Point(destx+jumpx[i],desty+jumpy[i]));
-//                    jumps.remove(new Point(destx+jumpx[i],desty+jumpy[i]));
-//                    newsrcx=destx+jumpx[i];
-//                    newsrcy=desty+jumpy[i];
-//                    
-//                    //path="\nJ "+newsrcy+","+newsrcx+" "+desty+","+destx+path;  
-//                    //path="\n"+"J "+desty+","+destx+" "+path;
-//                    counter++;
-//                    destx=newsrcx;
-//                    desty=newsrcy;
-//                    break;
-//                }
-////                else
-////                    counter=1;
-//                if(visited.contains(new Point(destx,desty)))
-//                    break;
-//            }
-//            System.out.println("visiting order:"+visited);
-//            
-//        }
-//        visited.add(new Point(srcx,srcy));
-//        System.out.println(visited);
-//        for(int i=0;i<visited.size()-1;i++)
-//        {
-//            path="J "+(int)visited.get(i+1).getX()+","+(int)visited.get(i+1).getY()+" "+(int)visited.get(i).getX()+","+(int)visited.get(i).getY()+"\n"+path;
-//        }
-//        if(counter==0)
-//        {
-//            System.out.println("counter not updated");
-//            path="J "+srcy+","+srcx+" "+finaldesty+","+finaldestx;
-//        }
-////        else
-////            path="J "+srcy+","+srcx+" "+desty+","+destx+path;     
         System.out.println("path before returnin:"+path);   
         return path;    
     }
@@ -382,16 +290,12 @@ class Solution
             for(int j=0;j<16;j++)
             {
                 List<Point> ll=new LinkedList<>();
-//                List<Point> jumps=new LinkedList<>();
                 LinkedList<Point> jumps=new LinkedList<>();
-//                List<Point> tjumps=new LinkedList<>();
                 Point src=new Point(i,j);
                 if(currentBoard[i][j]==currentp)
                 {
                     ll.addAll(calculateEdgeMove(i,j,currentBoard,currentp));
-//                    System.out.println("Source:"+i+","+j+":edge moves:"+ll);
                     jumps.addAll(calculateJumpMove(i,j,currentBoard,jumps,currentp));
-//                    System.out.println("Source:"+i+","+j+":jumpe moves:"+jumps);
                       
                 }
                 ll.addAll(jumps);
@@ -417,10 +321,12 @@ class Solution
                 
                 if(currentp=='B'&&!campA.contains(a)&&campA.contains(new Point(i+movex[m],j+movey[m])))
                 {
+			if(((i>=(i+movex[m]))&&(j>=(j+movey[m])))||!campA.contains(new Point(i+movex[m],j+movey[m])))
+                    {
+                        a=new Point(i+movex[m],j+movey[m]);
+                        ll.add(a);
+                    }
                 }  
-//                else if(currentp=='W'&&!campB.contains(a)&&campA.contains(new Point(i+movex[m],j+movey[m])))
-//                    {
-//                    }
                 else if(currentp=='W'&&campB.contains(new Point(i,j)))
                {
                     if(((i>=(i+movex[m]))&&(j>=(j+movey[m])))||!campB.contains(new Point(i+movex[m],j+movey[m])))
@@ -460,24 +366,15 @@ class Solution
                     if(!ll.contains(a))
                         {
                             ll.add(a);
-    //                        path.add("J"+i+","+j+" "+a.getX()+","+a.getY()+"\n"); 
                         }
-                    
-                    
-//                    else
-//                    {
-//                        if(!ll.contains(a))
-//                        {
-//                            ll.add(a);
-//    //                        path.add("J"+i+","+j+" "+a.getX()+","+a.getY()+"\n"); 
-//                        }
-//                    }
+                   
                 }    
             }        
             
         } 
         return ll;
     }
+	
     List calculateJumpMove(int i,int j,char[][] currentBoard,LinkedList ll,char currentp)
     {
         int jumpx[]={-2,-2,2,2,-2,0,2,0};
@@ -487,7 +384,6 @@ class Solution
         Point a=new Point(i,j);
         List<Point> campA=Arrays.asList(new Point(0,0),new Point(0,1),new Point(0,2),new Point(0,3),new Point(0,4),new Point(1,0),new Point(1,1),new Point(1,2),new Point(1,3),new Point(1,4),new Point(2,0),new Point(2,1),new Point(2,2),new Point(2,3),new Point(3,0),new Point(3,1),new Point(3,2),new Point(4,0),new Point(4,1));
         List<Point> campB=Arrays.asList(new Point(15,15),new Point(15,14),new Point(15,13),new Point(15,12),new Point(15,11),new Point(14,15),new Point(14,14),new Point(14,13),new Point(14,12),new Point(14,11),new Point(13,15),new Point(13,14),new Point(13,13),new Point(13,12),new Point(12,15),new Point(12,14),new Point(12,13),new Point(11,15),new Point(11,14));
-//        List<String> path=new LinkedList<>();
         List<Point> templl=new LinkedList<>();
         for(int m=0;m<8;m++)
         {
@@ -501,7 +397,6 @@ class Solution
                         if(!ll.contains(a))
                         {
                             ll.add(a);
-//                            path.add("J"+i+","+j+" "+a.getX()+","+a.getY()+"\n"); 
                         }
                     }
                 }
@@ -513,7 +408,6 @@ class Solution
                         if(!ll.contains(a))
                         {
                             ll.add(a);
-//                            path.add("J"+i+","+j+" "+a.getX()+","+a.getY()+"\n"); 
                         }
                     }
                 }
@@ -525,7 +419,6 @@ class Solution
                         if(!ll.contains(a))
                         {
                             ll.add(a);
-//                            path.add("J"+i+","+j+" "+a.getX()+","+a.getY()+"\n"); 
                         }
                     }     
                 }
@@ -537,7 +430,6 @@ class Solution
                         if(!ll.contains(a))
                         {
                             ll.add(a);
-//                            path.add("J"+i+","+j+" "+a.getX()+","+a.getY()+"\n"); 
                         }
                     }
                 }
@@ -546,41 +438,12 @@ class Solution
                 {
                     
                     a=new Point(i+jumpx[m],j+jumpy[m]);
-//                    if(currentp=='B'&&campA.contains(a))
-//                    {
-//                    }
-//                    else
-//                    {
-//                        if(!ll.contains(a))
-//                        {
-//                            ll.add(a);
-//    //                        path.add("J"+i+","+j+" "+a.getX()+","+a.getY()+"\n"); 
-//                        }
-//                    }
-//                    if(currentp=='W'&&campB.contains(a))
-//                    {
-//                    }
-//                    else
-//                    {
-//                        if(!ll.contains(a))
-//                        {
-//                            ll.add(a);
-//    //                        path.add("J"+i+","+j+" "+a.getX()+","+a.getY()+"\n"); 
-//                        }
-//                    }
                     if(!ll.contains(a))
                         {
                             ll.add(a);
-    //                        path.add("J"+i+","+j+" "+a.getX()+","+a.getY()+"\n"); 
                         }
                 } 
             }
-//            if(!templl.isEmpty())
-//            {
-//                templl=calculateJumpMove((int)a.getX(),(int)a.getY(),currentBoard,ll);
-//                ll.add(templl);
-//                return templl;
-//            } 
         }
         Set<Point> lls=new HashSet<>(ll);
         ll.clear();
@@ -606,7 +469,6 @@ class Solution
                             {
                                 ll.add(a);
                                 templl.add(a);
-//                                path.add("J "+i+","+j+" "+a.getX()+","+a.getY()+"\n"); 
                             }
                         }
                     }
@@ -619,7 +481,6 @@ class Solution
                             {
                                 templl.add(a);
                                 ll.add(a);
-//                                path.add("J"+i+","+j+" "+a.getX()+","+a.getY()+"\n"); 
                             }
                         }     
                     }
@@ -632,7 +493,6 @@ class Solution
                             {
                                 templl.add(a);
                                 ll.add(a);
-//                                path.add("J"+i+","+j+" "+a.getX()+","+a.getY()+"\n"); 
                             }
                         }
                     }
@@ -645,7 +505,6 @@ class Solution
                             {
                                 templl.add(a);
                                 ll.add(a);
-//                                path.add("J"+i+","+j+" "+a.getX()+","+a.getY()+"\n"); 
                             }
                         }
                     }
@@ -656,66 +515,30 @@ class Solution
                         {
                             templl.add(a);
                             ll.add(a);
-//                            path.add("J"+i+","+j+" "+a.getX()+","+a.getY()+"\n"); 
                         }
                     } 
                 } 
             }
         }
-//            
-//        else
-//        if(ll.size()==(int)0)
-//            return ll;
-//        else
-//            finalll= ll.stream().distinct().collect(Collectors.toList());
-//        return finalll;
          return ll;
     }
     
     char[][] move(Point src,Point newpos,char currentp,char[][] currentboard)
     {
-//        System.out.println("Before move method");
-//        for(int i=0;i<16;i++)
-//        {    
-//            for(int j=0;j<16;j++)
-//                System.out.print(currentboard[i][j]);
-//            System.out.println();
-//        }
         currentboard[(int)src.getX()][(int)src.getY()]='.';
         currentboard[(int)newpos.getX()][(int)newpos.getY()]=currentp; 
-//        System.out.println("in move method"+src.toString()+newpos.toString());
-//        for(int i=0;i<16;i++)
-//        {    
-//            for(int j=0;j<16;j++)
-//                System.out.print(currentboard[i][j]);
-//            System.out.println();
-//        }
         return currentboard;
     }
     char[][] undomove(Point src,Point newpos,char currentp,char[][] currentboard)
     {
-//        System.out.println("Before undomove method");
-//        for(int i=0;i<16;i++)
-//        {    
-//            for(int j=0;j<16;j++)
-//                System.out.print(currentboard[i][j]);
-//            System.out.println();
-//        }
+
         currentboard[(int)src.getX()][(int)src.getY()]='.';
         currentboard[(int)newpos.getX()][(int)newpos.getY()]=currentp; 
-//        System.out.println("in undomove method"+src.toString()+newpos.toString());
-//        for(int i=0;i<16;i++)
-//        {    
-//            for(int j=0;j<16;j++)
-//                System.out.print(currentboard[i][j]);
-//            System.out.println();
-//        }
         return currentboard;
     }
     
     public int maximize(char currentboard[][],int depth,int alpha,int beta)
     {
-//        BoardAfterMove b;
         char currentp=p;
         List<Point> campA=Arrays.asList(new Point(0,0),new Point(0,1),new Point(0,2),new Point(0,3),new Point(0,4),new Point(1,0),new Point(1,1),new Point(1,2),new Point(1,3),new Point(1,4),new Point(2,0),new Point(2,1),new Point(2,2),new Point(2,3),new Point(3,0),new Point(3,1),new Point(3,2),new Point(4,0),new Point(4,1));
         List<Point> campB=Arrays.asList(new Point(15,15),new Point(15,14),new Point(15,13),new Point(15,12),new Point(15,11),new Point(14,15),new Point(14,14),new Point(14,13),new Point(14,12),new Point(14,11),new Point(13,15),new Point(13,14),new Point(13,13),new Point(13,12),new Point(12,15),new Point(12,14),new Point(12,13),new Point(11,15),new Point(11,14));
@@ -724,13 +547,10 @@ class Solution
         Point bestdest=new Point();
         int evalvalue;
         
-//        System.out.println("maximize player:"+currentp);
         if(depth==0||isWinning(currentboard,currentp))
         {
-            //return new BoardAfterMove(evaluate(currentboard,currentp),currentboard,bestsrc,bestdest); 
             evalvalue=evaluate(currentboard,currentp);
-            return evalvalue;
-            //return b;               //return int in fction by returning util value..store the moves in boardaftermove
+            return evalvalue;            //return int in function by returning util value..store the moves in boardaftermove
         }
         HashMap<Point, List> moves = new HashMap<>();
         List<Point> ll=new LinkedList<>(); 
@@ -758,43 +578,33 @@ class Solution
                 
                 evalvalue=minimize(newboard,depth-1,alpha,beta);
                 currentboard=undomove(pos,src,currentp,currentboard);
-                //evalvalue=minimize(move(src,pos,currentp,currentboard),depth-1,alpha,beta);
-                //if(b.utilvalue>best)
                 
                 if(evalvalue>best)
                 {
                     best=evalvalue;
-                    //BoardAfterMove.src=src; 
                     bestmovesrc=src;
-                    
-                    //BoardAfterMove.dest=pos; 
                     bestmovedest=pos;
                 }
                 if(best>=beta)
                     return best;
                 alpha=max(best,alpha);
-                //if(beta<=alpha)
-                  //          break;
             }
         } 
-        return best;//new BoardAfterMove(best,currentboard,bestsrc,bestdest);    
+        return best; 
     }
     
     public int minimize(char currentboard[][],int depth,int alpha,int beta)
     {
         char currentp;
         int evalvalue;
-//        BoardAfterMove b;
         List<Point> campA=Arrays.asList(new Point(0,0),new Point(0,1),new Point(0,2),new Point(0,3),new Point(0,4),new Point(1,0),new Point(1,1),new Point(1,2),new Point(1,3),new Point(1,4),new Point(2,0),new Point(2,1),new Point(2,2),new Point(2,3),new Point(3,0),new Point(3,1),new Point(3,2),new Point(4,0),new Point(4,1));
-        List<Point> campB=Arrays.asList(new Point(15,15),new Point(15,14),new Point(15,13),new Point(15,12),new Point(15,11),new Point(14,15),new Point(14,14),new Point(14,13),new Point(14,12),new Point(14,11),new Point(13,15),new Point(13,14),new Point(13,13),new Point(13,12),new Point(12,15),new Point(12,14),new Point(12,13),new Point(11,15),new Point(11,14));
-        
+        List<Point> campB=Arrays.asList(new Point(15,15),new Point(15,14),new Point(15,13),new Point(15,12),new Point(15,11),new Point(14,15),new Point(14,14),new Point(14,13),new Point(14,12),new Point(14,11),new Point(13,15),new Point(13,14),new Point(13,13),new Point(13,12),new Point(12,15),new Point(12,14),new Point(12,13),new Point(11,15),new Point(11,14));      
         if(p=='W')
             currentp='B';
         else
             currentp='W';
         Point bestsrc=new Point();
         Point bestdest=new Point();
-//        System.out.println("minimize player:"+currentp);
         if(depth==0||isWinning(currentboard,currentp))
         {    
             evalvalue=evaluate(currentboard,currentp);
@@ -824,29 +634,17 @@ class Solution
                 char[][] newboard=move(src,pos,currentp,currentboard);
                 evalvalue=maximize(newboard,depth-1,alpha,beta);
                 currentboard=undomove(pos,src,currentp,currentboard);
-                //evalvalue=maximize(move(src,pos,currentp,currentboard),depth-1,alpha,beta);
                 if(evalvalue<best)
                 {
-                    //best=b.utilvalue;
                     best=evalvalue;
-                    //BoardAfterMove.src=src; 
-                   // bestmovesrc=src;
-                    //BoardAfterMove.dest=pos; 
-                    //bestmovedest=pos;
                 }
                 if(best<=alpha)
                     return best;
                 beta=min(best,beta);
-                //if(beta<=alpha)
-                  //          break;
             }
         }
         return best;
-        //return new BoardAfterMove(best,currentboard,bestsrc,bestdest);    
     }
-    
-//    
-
     
     int evaluate(char[][] currentboard,char currentp)
     {
@@ -878,7 +676,7 @@ class Solution
                 {
 
                     if(currentboard[i][j]==currentp)
-                        value=value+val[i][j];       //needs to be changed
+                        value=value+val[i][j];      
                 }   
             }
 
@@ -887,41 +685,15 @@ class Solution
             {
                 for(int j=15;j>=0;j--)
                 {
-//                    System.out.print(val[i][j]+",");
                         if(currentboard[i][j]==currentp)
                         value=value+val[i][j];
                 }
             } 
-//            for(int i=0;i<16;i++)
-//            {
-//                for(int j=0;j<16;j++)
-//                {
-//
-//                    if(currentboard[i][j]==currentp)
-//                        value=(int)(value+base.distance(i,j));        //needs to be changed
-//                }   
-//            }
         return value;
     }
     
 }
 
-
-
-class BoardAfterMove
-{
-    int utilvalue;
-    char[][] newboard;
-    static Point src;
-    static Point dest;
-//    BoardAfterMove(int utilvalue,char[][] newboard,Point src,Point dest)
-//    {
-//        this.utilvalue=utilvalue;
-//        this.newboard=newboard;
-//        this.dest=dest;
-//        this.src=src;
-//    }
-}
 class SingleSolution
 {
     char board[][]=new char[16][16];
@@ -958,16 +730,7 @@ class SingleSolution
             path="E "+srcy+","+srcx+" "+desty+","+destx+"\n";
         else
              path="J "+srcy+","+srcx+" "+desty+","+destx+"\n";
-        //path=""+BoardAfterMove.src.toString()+" "+BoardAfterMove.dest.toString();
-        //path=""+bestmovesrc.toString()+" "+bestmovedest.toString();
-        //char[][] newboardx=move(BoardAfterMove.src,BoardAfterMove.dest,p,board);
         char[][] newboardx=move(bestmovesrc,bestmovedest,p,board);
-    //    for(int i=0;i<16;i++)
-    //    {
-    //        for(int j=0;j<16;j++)
-    //            System.out.print(newboardx[i][j]);
-    //        System.out.println();
-    //    }
         return path;
     }
     
@@ -1043,45 +806,21 @@ class SingleSolution
             for(int j=0;j<16;j++)
             {
                 List<Point> ll=new LinkedList<>();
-//                List<Point> jumps=new LinkedList<>();
                 LinkedList<Point> jumps=new LinkedList<>();
                 List<Point> tjumps=new LinkedList<>();
                 Point src=new Point(i,j);
                 if(currentBoard[i][j]==currentp)
                 {
                     ll.addAll(calculateEdgeMove(i,j,currentBoard,currentp));
-//                    System.out.println("Source:"+i+","+j+":edge moves:"+ll);
-                    
-                    jumps.addAll(calculateJumpMove(i,j,currentBoard,jumps,currentp));
-                    
-//                    System.out.println("Source:"+i+","+j+":jumpe moves:"+jumps);
-                    //for(Point p:jumps)
-//                    System.out.println("Jumps are: "+jumps);
-//                    
-//                    //for(Iterator<Point> p=jumps.iterator(); p.hasNext(); )
-//                    for(int k=0;k<jumps.size();k++)
-//                    {
-//                        Point p=jumps.get(k);
-//                        System.out.println("Key"+p.toString());
-////                       jumps.addAll(calculateJumpMove((int)p.getX(),(int)p.getY(),currentBoard,jumps));
-//                       tjumps=calculateJumpMove((int)p.getX(),(int)p.getY(),currentBoard,jumps);
-//                       for(Point tp:tjumps)
-//                       {
-//                           if(!jumps.contains(tp))
-//                               jumps.add(tp);
-//                       }
-//                        System.out.print(jumps);
-//                    }     
+		    jumps.addAll(calculateJumpMove(i,j,currentBoard,jumps,currentp));   
                 }
                 ll.addAll(jumps);
-                
-                
-//                System.out.println("Source:"+i+","+j+":total moves:"+ll);
                 moves.put(src,ll);
             }
         }
         return moves; 
     }
+	
     List calculateEdgeMove(int i,int j,char[][] currentBoard,char currentp)
     {
         int movex[]={-1,-1,-1,0,0,1,1,1};
@@ -1133,10 +872,10 @@ class SingleSolution
                     ll.add(a);
                 }    
             }        
-            
         } 
         return ll;
     }
+	
     List calculateJumpMove(int i,int j,char[][] currentBoard,LinkedList ll,char currentp)
     {
         int jumpx[]={-2,-2,2,2,-2,0,2,0};
@@ -1145,8 +884,7 @@ class SingleSolution
         int midy[]={-1,1,-1,1,0,1,0,-1};
         Point a=new Point(i,j);
         List<Point> campA=Arrays.asList(new Point(0,0),new Point(0,1),new Point(0,2),new Point(0,3),new Point(0,4),new Point(1,0),new Point(1,1),new Point(1,2),new Point(1,3),new Point(1,4),new Point(2,0),new Point(2,1),new Point(2,2),new Point(2,3),new Point(3,0),new Point(3,1),new Point(3,2),new Point(4,0),new Point(4,1));
-        List<Point> campB=Arrays.asList(new Point(15,15),new Point(15,14),new Point(15,13),new Point(15,12),new Point(15,11),new Point(14,15),new Point(14,14),new Point(14,13),new Point(14,12),new Point(14,11),new Point(13,15),new Point(13,14),new Point(13,13),new Point(13,12),new Point(12,15),new Point(12,14),new Point(12,13),new Point(11,15),new Point(11,14));
-        
+        List<Point> campB=Arrays.asList(new Point(15,15),new Point(15,14),new Point(15,13),new Point(15,12),new Point(15,11),new Point(14,15),new Point(14,14),new Point(14,13),new Point(14,12),new Point(14,11),new Point(13,15),new Point(13,14),new Point(13,13),new Point(13,12),new Point(12,15),new Point(12,14),new Point(12,13),new Point(11,15),new Point(11,14));     
         List<Point> templl=new LinkedList<>();
         for(int m=0;m<8;m++)
         {
@@ -1195,57 +933,17 @@ class SingleSolution
                         ll.add(a);
                 } 
             }
-//            if(!templl.isEmpty())
-//            {
-//                templl=calculateJumpMove((int)a.getX(),(int)a.getY(),currentBoard,ll);
-//                ll.add(templl);
-//                return templl;
-//            }
-//            
-        }
-//            
-//        else
             return ll;
     }
     
     char[][] move(Point src,Point newpos,char currentp,char[][] currentboard)
     {
-//        System.out.println("Before move method");
-//        for(int i=0;i<16;i++)
-//        {    
-//            for(int j=0;j<16;j++)
-//                System.out.print(currentboard[i][j]);
-//            System.out.println();
-//        }
-        currentboard[(int)src.getX()][(int)src.getY()]='.';
-        currentboard[(int)newpos.getX()][(int)newpos.getY()]=currentp; 
-//        System.out.println("in move method"+src.toString()+newpos.toString());
-//        for(int i=0;i<16;i++)
-//        {    
-//            for(int j=0;j<16;j++)
-//                System.out.print(currentboard[i][j]);
-//            System.out.println();
-//        }
         return currentboard;
     }
     char[][] undomove(Point src,Point newpos,char currentp,char[][] currentboard)
     {
-//        System.out.println("Before undomove method");
-//        for(int i=0;i<16;i++)
-//        {    
-//            for(int j=0;j<16;j++)
-//                System.out.print(currentboard[i][j]);
-//            System.out.println();
-//        }
         currentboard[(int)src.getX()][(int)src.getY()]='.';
         currentboard[(int)newpos.getX()][(int)newpos.getY()]=currentp; 
-//        System.out.println("in undomove method"+src.toString()+newpos.toString());
-//        for(int i=0;i<16;i++)
-//        {    
-//            for(int j=0;j<16;j++)
-//                System.out.print(currentboard[i][j]);
-//            System.out.println();
-//        }
         return currentboard;
     }
     
@@ -1259,14 +957,10 @@ class SingleSolution
         Point bestsrc=new Point();
         Point bestdest=new Point();
         int evalvalue;
-        
-//        System.out.println("maximize player:"+currentp);
         if(depth==0||isWinning(currentboard,currentp))
         {
-            //return new BoardAfterMove(evaluate(currentboard,currentp),currentboard,bestsrc,bestdest); 
             evalvalue=evaluate(currentboard,currentp);
-            return evalvalue;
-            //return b;               //return int in fction by returning util value..store the moves in boardaftermove
+            return evalvalue;          //return int in fction by returning util value.
         }
         HashMap<Point, List> moves = new HashMap<>();
         List<Point> ll=new LinkedList<>(); 
@@ -1294,25 +988,18 @@ class SingleSolution
                 
                 evalvalue=minimize(newboard,depth-1,alpha,beta);
                 currentboard=undomove(pos,src,currentp,currentboard);
-                //evalvalue=minimize(move(src,pos,currentp,currentboard),depth-1,alpha,beta);
-                //if(b.utilvalue>best)
                 if(evalvalue>best)
                 {
                     best=evalvalue;
-                    //BoardAfterMove.src=src; 
                     bestmovesrc=src;
-                    
-                    //BoardAfterMove.dest=pos; 
                     bestmovedest=pos;
                 }
                 if(best>=beta)
                     return best;
                 alpha=max(best,alpha);
-                //if(beta<=alpha)
-                  //          break;
             }
         } 
-        return best;//new BoardAfterMove(best,currentboard,bestsrc,bestdest);    
+        return best;
     }
     
     public int minimize(char currentboard[][],int depth,int alpha,int beta)
@@ -1322,14 +1009,12 @@ class SingleSolution
         BoardAfterMove b;
         List<Point> campA=Arrays.asList(new Point(0,0),new Point(0,1),new Point(0,2),new Point(0,3),new Point(0,4),new Point(1,0),new Point(1,1),new Point(1,2),new Point(1,3),new Point(1,4),new Point(2,0),new Point(2,1),new Point(2,2),new Point(2,3),new Point(3,0),new Point(3,1),new Point(3,2),new Point(4,0),new Point(4,1));
         List<Point> campB=Arrays.asList(new Point(15,15),new Point(15,14),new Point(15,13),new Point(15,12),new Point(15,11),new Point(14,15),new Point(14,14),new Point(14,13),new Point(14,12),new Point(14,11),new Point(13,15),new Point(13,14),new Point(13,13),new Point(13,12),new Point(12,15),new Point(12,14),new Point(12,13),new Point(11,15),new Point(11,14));
-        
         if(p=='W')
             currentp='B';
         else
             currentp='W';
         Point bestsrc=new Point();
         Point bestdest=new Point();
-//        System.out.println("minimize player:"+currentp);
         if(depth==0||isWinning(currentboard,currentp))
         {    
             evalvalue=evaluate(currentboard,currentp);
@@ -1359,29 +1044,17 @@ class SingleSolution
                 char[][] newboard=move(src,pos,currentp,currentboard);
                 evalvalue=maximize(newboard,depth-1,alpha,beta);
                 currentboard=undomove(pos,src,currentp,currentboard);
-                //evalvalue=maximize(move(src,pos,currentp,currentboard),depth-1,alpha,beta);
                 if(evalvalue<best)
                 {
-                    //best=b.utilvalue;
                     best=evalvalue;
-                    //BoardAfterMove.src=src; 
-                   // bestmovesrc=src;
-                    //BoardAfterMove.dest=pos; 
-                    //bestmovedest=pos;
                 }
                 if(best<=alpha)
                     return best;
                 beta=min(best,beta);
-                //if(beta<=alpha)
-                  //          break;
             }
         }
         return best;
-        //return new BoardAfterMove(best,currentboard,bestsrc,bestdest);    
     }
-    
-//    
-
     
     int evaluate(char[][] currentboard,char currentp)
     {
@@ -1411,14 +1084,9 @@ class SingleSolution
             {
                 
                 if(currentboard[i][j]==currentp)
-                    value=(int)(value+base.distance(i,j));        //needs to be changed
+                    value=(int)(value+base.distance(i,j));      
             }   
         }
         return value;
-    }
-    
+    }   
 }
-
-
-
-
